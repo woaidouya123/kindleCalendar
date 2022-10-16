@@ -1,0 +1,20 @@
+{
+	"items": [
+	{
+		"name": "Kindle日历",
+		"priority": -1,
+		"items": [
+		{
+			"name": "KindleCalendar_On",
+			"priority": -999,
+			"action": "source ./bin/start.sh"		
+		},
+		{
+			"name": "KindleCalendar_Off",
+			"priority": -999,
+			"action": "source ./bin/stop.sh"	
+		}
+		]
+	}
+	]
+}
