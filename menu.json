@@ -13,6 +13,16 @@
 			"name": "KindleCalendar_Off",
 			"priority": -999,
 			"action": "source ./bin/stop.sh"	
+		},
+		{
+			"name": "KindleClock_On",
+			"priority": -999,
+			"action": "source ./bin/clock_on.sh"		
+		},
+		{
+			"name": "KindleClock_Off",
+			"priority": -999,
+			"action": "source ./bin/clock_off.sh"		
 		}
 		]
 	}
