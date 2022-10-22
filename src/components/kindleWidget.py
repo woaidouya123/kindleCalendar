@@ -24,19 +24,15 @@ class KindleWidget:
     pass
 
   def render(self, img, w_width, w_height, padLeft, padTop):
-    bound = self.__calcBound(img, w_width, w_height, padLeft, padTop)
+    bound = self.__calcBound(w_width, w_height, padLeft, padTop)
     if(self.isKindle == True):
       self.__drawEips(img, bound[0], bound[1])
     self.__drawImg(img, bound[0], bound[1])
 
-  def __calcBound(self, img, w_width, w_height, padLeft = 0, padTop = 0):
+  def __calcBound(self, w_width, w_height, padLeft = 0, padTop = 0):
     w_left = self.left + padLeft
     w_top = self.top + padTop
     if(self.s_rotate == True):
-      Timage = Image.open(img)
-      Timage = Timage.transpose(Image.ROTATE_270)
-      Timage.save(img)
-      Timage.close()
       w_left = self.s_height - padTop - w_height - self.top
       w_top = self.left + padLeft
     return (w_left, w_top)
@@ -49,6 +45,12 @@ class KindleWidget:
     Himage = Image.open(targetPath)
     Himage.paste(Image.open(img), (x, y))
     Himage.save(targetPath)
+
+  def saveImg(self, Himage, path):
+    if(self.s_rotate == True):
+      Himage = Himage.transpose(Image.ROTATE_270)
+    Himage.save(path)
+    Himage.close()
 
 
   def getAlignCenterPos(self, str, font, draw, center, top):
