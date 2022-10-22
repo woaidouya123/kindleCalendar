@@ -1,3 +1,3 @@
 #!/bin/sh
 
-pkill -f clock.py
+pkill -f layout.py
