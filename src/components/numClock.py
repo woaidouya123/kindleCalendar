@@ -25,8 +25,8 @@ class NumClock(KindleWidget):
   curTime = ["-"]*4
   perTime = ["-"]*4
 
-  def __init__(self, s_width, s_height, s_rotate, left = 0, top = 0, fontSize = 20, border = True, align = "left") -> None:
-    super().__init__(s_width, s_height, s_rotate, left, top)
+  def __init__(self, s_width, s_height, s_rotate, left = 0, top = 0, fontSize = 20, border = True, align = "left", isKindle = False) -> None:
+    super().__init__(s_width, s_height, s_rotate, left, top, isKindle)
     self.fontSize = fontSize
     self.border = border
     self.font = ImageFont.truetype(fontPath, fontSize)
@@ -48,6 +48,10 @@ class NumClock(KindleWidget):
     Hdraw.text(self.getAlignCenterPos(":", self.font, Hdraw, self.width / 2, 0), ":", font=self.font)
     Himage.save(bgPath)
     Himage.close()
+    self.render(bgPath, self.width, self.height, 0, 0)
+
+  def reset(self):
+    self.perTime = ["-"]*4
     self.render(bgPath, self.width, self.height, 0, 0)
 
   def draw(self, timeNow):
