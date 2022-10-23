@@ -54,7 +54,6 @@ class NumClock(KindleWidget):
     self.render(bgPath, self.width, self.height, 0, 0)
 
   def draw(self, timeNow):
-    print(self.borderWidth, self.borderHeight)
     strtime = timeNow.strftime('%H:%M')
     self.curTime = [strtime[0], strtime[1], strtime[3], strtime[4]]
     for i in range(len(self.curTime)):

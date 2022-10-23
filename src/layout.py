@@ -3,7 +3,7 @@ import time
 import datetime
 import threading
 from PIL import Image
-from components import numClock
+from components import *
 from configparser import ConfigParser
 
 rootPath = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +35,8 @@ def clear():
 def draw():
   clearCount = 0 # 重置屏幕时间
   clear()
-  clock1 = numClock.NumClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 254, 200, True, "center", isKindle=configMap["mode"] == 1)
+  clock1 = NumClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 400, 200, True, "center", isKindle=configMap["mode"] == 1)
+  clock2 = TickClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 50, 300, True, "center", isKindle=configMap["mode"] == 1)
   while True:
     clearCount = clearCount - 1
     if (clearCount <= 0):
@@ -45,6 +46,7 @@ def draw():
     timeNow = datetime.datetime.now()
     delta = float(str(timeNow.second) + "." + str(timeNow.microsecond))
     clock1.draw(timeNow)
+    clock2.draw(timeNow)
     time.sleep(60 - delta)
 
 draw()

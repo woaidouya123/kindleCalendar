@@ -1,4 +1,5 @@
 import os
+import math
 from PIL import Image
 
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -52,6 +53,13 @@ class KindleWidget:
     Himage.save(path)
     Himage.close()
 
-
+  # 计算字体居中显示时文字起始坐标
   def getAlignCenterPos(self, str, font, draw, center, top):
     return (center - draw.textlength(str, font=font) / 2, top)
+
+  # 计算点xy绕center旋转angle角度后的坐标
+  def getRotatePos(self, xy: tuple, center: tuple, angle: float):
+    return [
+      (xy[0] - center[0]) * math.cos(angle) - (xy[1] - center[1]) * math.sin(angle) + center[0],
+      (xy[0] - center[0]) * math.sin(angle) + (xy[1] - center[1]) * math.cos(angle) + center[1],
+    ]
