@@ -3,5 +3,6 @@ import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from numClock import NumClock
 from tickClock import TickClock
+from weather import Weather
 
-__all__ = ["NumClock", "TickClock"]
+__all__ = ["NumClock", "TickClock", "Weather"]

@@ -37,6 +37,7 @@ def draw():
   clear()
   clock1 = NumClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 400, 200, True, "center", isKindle=configMap["mode"] == 1)
   clock2 = TickClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 50, 300, True, "center", isKindle=configMap["mode"] == 1)
+  weather = Weather(configMap["width"], configMap["height"], configMap["rotate"] == 1, 50, 130, 300, 150, "left", fontSize=30, imgWidth=66, cityCode=configMap["citycode"], isKindle=configMap["mode"] == 1)
   while True:
     clearCount = clearCount - 1
     if (clearCount <= 0):
@@ -47,6 +48,7 @@ def draw():
     delta = float(str(timeNow.second) + "." + str(timeNow.microsecond))
     clock1.draw(timeNow)
     clock2.draw(timeNow)
+    weather.draw(timeNow)
     time.sleep(60 - delta)
 
 draw()
