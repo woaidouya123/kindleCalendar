@@ -6,6 +6,7 @@ from todoist_api_python.api import TodoistAPI
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 bgPath = rootPath + "/assets/todoist/bg.jpg"
+emptyPath = rootPath + "/assets/todoist/empty.png"
 targetPath = rootPath + "/assets/todoist/target.jpg"
 fontPath = rootPath + "/assets/font.ttf"
 
@@ -32,12 +33,16 @@ class TodoList(KindleWidget):
     draw = ImageDraw.Draw(Himage)
     bound = draw.textbbox((0, 0), "米", font=self.font)
     self.lineHeight = bound[3] + bound[1]
+    self.maxLength = self.width // (bound[2])
     # 对齐方式
     if(align == "center"):
       self.left = self.left - int(self.width / 2)
     elif(align == "right"):
       self.left = self.left - self.width
+    if(self.border == True):
+      draw.rectangle([1, 1, self.width - 1, self.height - 1])
     Himage.save(bgPath)
+    self.curTodo = self.getTodoList()
 
   def getTodoList(self):
     try:
@@ -47,30 +52,38 @@ class TodoList(KindleWidget):
       print(error)
       return []
 
-  def draw(self):
-    tasks = self.getTodoList()
-    self.curTodo = []
-    for task in tasks:
-      self.curTodo.append({
-        'title': task.content,
-        'desc': task.description,
-        "date": task.due.string
-      })
-    needRefresh = False
-    if(len(self.curTodo) != len(self.perTodo)):
-      needRefresh = True
-    if(not needRefresh):
-      for i in range(len(self.curTodo)):
-        if(self.curTodo[i]['title'] != self.perTodo[i]['title'] or self.curTodo[i]['desc'] != self.perTodo[i]['desc'] or self.curTodo[i]['date'] != self.perTodo[i]['date']):
-          needRefresh = True
-          break
-    if(needRefresh):
-      Himage = Image.open(bgPath)
-      draw = ImageDraw.Draw(Himage)
-      for i in range(len(self.curTodo)):
-        draw.text((0, self.lineHeight * i), self.curTodo[i]['title'], font=self.font)
-      self.saveImg(Himage, targetPath)
-      self.perTodo = list(self.curTodo)
+  def draw(self, timeNow):
+    if(len(self.curTodo) != len(self.perTodo) or timeNow.minute % 1 == 0):
+      tasks = self.getTodoList()
+      self.curTodo = []
+      for task in tasks:
+        title = '○' + task.content
+        if(len(title) > self.maxLength):
+          title = title[:self.maxLength - 1] + "..."
+        self.curTodo.append({
+          'title': title,
+          'desc': task.description,
+          "date": task.due.string
+        })
+      needRefresh = False
+      if(len(self.curTodo) != len(self.perTodo)):
+        needRefresh = True
+      if(not needRefresh):
+        for i in range(len(self.curTodo)):
+          if(self.curTodo[i]['title'] != self.perTodo[i]['title'] or self.curTodo[i]['desc'] != self.perTodo[i]['desc'] or self.curTodo[i]['date'] != self.perTodo[i]['date']):
+            needRefresh = True
+            break
+      if(needRefresh):
+        Himage = Image.open(bgPath)
+        draw = ImageDraw.Draw(Himage)
+        for i in range(len(self.curTodo)):
+          draw.text((0, self.lineHeight * i), self.curTodo[i]['title'], font=self.font)
+        if(len(self.curTodo) == 0):
+          emptyImage = Image.open(emptyPath)
+          Himage.paste(emptyImage, (int(self.width / 2) - 17, int(self.height / 2) - 16), 0)
+        self.saveImg(Himage, targetPath)
+        self.render(targetPath, self.width, self.height, 0, 0)
+        self.perTodo = list(self.curTodo)
 
-todolist = TodoList(1024, 768, True, 512, 234, width=200, height=80, align="center", fontSize=20, border=False, authCode="ae9258d9e28828f5a12ae2071e69adbe7a6a8e12")
-todolist.draw()
+# todolist = TodoList(1024, 768, True, 512, 234, width=200, height=160, align="center", fontSize=12, border=False, authCode="ae9258d9e28828f5a12ae2071e69adbe7a6a8e12")
+# todolist.draw(datetime.datetime.now())
