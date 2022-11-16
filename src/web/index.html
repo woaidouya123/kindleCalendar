@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KindleCanlendar</title>
+    <style>
+        body,
+        div {
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wraper {
+            text-align: center;
+            /* transform-origin: 0 0; */
+            position: relative;
+            width: 100%;
+            left: 50%;
+            top: 50%;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wraper" id="wrapper">
+        <img id="kindle" src="" alt="loading">
+    </div>
+    <script>
+        window.onload = function () {
+            var imgPath = "../assets/kindle.jpeg";
+            var wrapper = document.querySelector("#wrapper");
+            var img = document.querySelector("#kindle");
+            var WIDTH = window.innerWidth;
+            var HEIGHT = window.innerHeight;
+            var timer = null;
+            img.onload = function (e) {
+                var imgHeight = e.path[0].naturalHeight;
+                var imgWidth = e.path[0].naturalWidth;
+                var scale = Math.min(HEIGHT / imgHeight, WIDTH / imgWidth);
+                wrapper.style.height = imgHeight + "px";
+                wrapper.style.width = imgWidth + "px";
+                wrapper.style.transform = 'translateX(-50%) translateY(-50%) scale(' + scale + ')';
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+            }
+            var refresh = function () {
+                var curDate = new Date();
+                var delta = 60000 - curDate.getSeconds() * 1000 - curDate.getMilliseconds();
+                img.src = "../assets/kindle.jpeg?_t=" + curDate.getTime();
+                timer = setTimeout(refresh, delta);
+            }
+            refresh();
+            window.onresize = refresh();
+        }
+    </script>
+</body>
+
+</html>
