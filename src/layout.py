@@ -29,7 +29,7 @@ def clearEips():
 
 def clear():
   clearImg()
-  if(configMap["mode"] == 1):
+  if(configMap["mode"] == '1'):
     clearEips()
 
 def draw():
@@ -44,6 +44,8 @@ def draw():
     if (clearCount <= 0):
       clear()
       numClock.reset()
+      weather.reset()
+      todoList.reset()
       clearCount = 10
     timeNow = datetime.datetime.now()
     delta = float(str(timeNow.second) + "." + str(timeNow.microsecond))

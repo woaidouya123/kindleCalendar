@@ -86,6 +86,10 @@ class Weather(KindleWidget):
     else:
       return tempList
 
+  def reset(self):
+    self.curWeather = ["-"]*8
+    self.perWeather = [" "]*8
+
   def draw(self, timeNow):
     if(self.curWeather == ["-"]*8 or timeNow.hour >= 7 and timeNow.hour < 22 and timeNow.minute == 0):
       self.curWeather = self.getWeatherData()

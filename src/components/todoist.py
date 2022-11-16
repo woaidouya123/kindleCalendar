@@ -42,7 +42,7 @@ class TodoList(KindleWidget):
     if(self.border == True):
       draw.rectangle([1, 1, self.width - 1, self.height - 1])
     Himage.save(bgPath)
-    self.curTodo = self.getTodoList()
+    self.perTodo = [{'title': '-'}]
 
   def getTodoList(self):
     try:
@@ -52,8 +52,12 @@ class TodoList(KindleWidget):
       print(error)
       return []
 
+  def reset(self):
+    self.curTodo = []
+    self.perTodo = [{'title': '-'}]
+
   def draw(self, timeNow):
-    if(len(self.curTodo) != len(self.perTodo) or timeNow.minute % 1 == 0):
+    if(len(self.curTodo) != len(self.perTodo) or timeNow.minute % 5 == 0):
       tasks = self.getTodoList()
       self.curTodo = []
       for task in tasks:
