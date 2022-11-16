@@ -6,7 +6,7 @@ this is a kindle-plugin project to make kindle to be a dynamic calendar.
 - [x] 数字时钟
 - [x] 指针时钟
 - [x] 天气组件
-- [ ] 待办事项(todist)
+- [x] 待办事项(todist)
 
 2. Web展示
 - [ ] web版展示页面
