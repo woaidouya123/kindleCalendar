@@ -14,11 +14,11 @@ config = cfg.items("KindleCalendar")
 configMap = {}
 for k,v in config:
   print(k,v)
-  configMap[k] = int(v)
+  configMap[k] = v
 
 def clearImg():
-  Himage = Image.new('1', (configMap["width"], configMap["height"]), 255)
-  if(configMap["rotate"] == 1):
+  Himage = Image.new('1', (int(configMap["width"]), int(configMap["height"])), 255)
+  if(configMap["rotate"] == '1'):
     Himage = Himage.transpose(Image.ROTATE_270)
   Himage.save(targetPath)
   Himage.close()
@@ -35,20 +35,22 @@ def clear():
 def draw():
   clearCount = 0 # 重置屏幕时间
   clear()
-  clock1 = NumClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 400, 200, True, "center", isKindle=configMap["mode"] == 1)
-  clock2 = TickClock(configMap["width"], configMap["height"], configMap["rotate"] == 1, 512, 50, 300, True, "center", isKindle=configMap["mode"] == 1)
-  weather = Weather(configMap["width"], configMap["height"], configMap["rotate"] == 1, 50, 130, 300, 150, "left", fontSize=30, imgWidth=66, cityCode=configMap["citycode"], isKindle=configMap["mode"] == 1)
+  numClock = NumClock(int(configMap["width"]), int(configMap["height"]), configMap["rotate"] == '1', 512, 400, 200, True, "center", isKindle=configMap["mode"] == '1')
+  tickClock = TickClock(int(configMap["width"]), int(configMap["height"]), configMap["rotate"] == '1', 512, 50, 300, True, "center", isKindle=configMap["mode"] == '1')
+  weather = Weather(int(configMap["width"]), int(configMap["height"]), configMap["rotate"] == '1', 50, 130, 300, 150, "left", fontSize=30, imgWidth=66, cityCode=configMap["citycode"], isKindle=configMap["mode"] == '1')
+  todoList = TodoList(int(configMap["width"]), int(configMap["height"]), configMap["rotate"] == '1', 974, 130, 300, 225, "right", fontSize=26, border=False, authCode=configMap["authcode"], isKindle=configMap["mode"] == '1')
   while True:
     clearCount = clearCount - 1
     if (clearCount <= 0):
       clear()
-      clock1.reset()
+      numClock.reset()
       clearCount = 10
     timeNow = datetime.datetime.now()
     delta = float(str(timeNow.second) + "." + str(timeNow.microsecond))
-    clock1.draw(timeNow)
-    clock2.draw(timeNow)
+    numClock.draw(timeNow)
+    tickClock.draw(timeNow)
     weather.draw(timeNow)
+    todoList.draw(timeNow)
     time.sleep(60 - delta)
 
 draw()
