@@ -46,8 +46,7 @@ class NumClock(KindleWidget):
     Himage = Image.new('1', (self.width, self.height), 255)
     Hdraw = ImageDraw.Draw(Himage)
     Hdraw.text(self.getAlignCenterPos(":", self.font, Hdraw, self.width / 2, 0), ":", font=self.font)
-    Himage.save(bgPath)
-    Himage.close()
+    self.saveImg(Himage, bgPath)
     self.render(bgPath, self.width, self.height, 0, 0)
 
   def reset(self):
@@ -55,7 +54,6 @@ class NumClock(KindleWidget):
     self.render(bgPath, self.width, self.height, 0, 0)
 
   def draw(self, timeNow):
-    print(self.borderWidth, self.borderHeight)
     strtime = timeNow.strftime('%H:%M')
     self.curTime = [strtime[0], strtime[1], strtime[3], strtime[4]]
     for i in range(len(self.curTime)):
@@ -65,8 +63,7 @@ class NumClock(KindleWidget):
         if(self.border == True):
           draw.rectangle([0, 0, self.borderWidth - 1, self.borderHeight - 1])
         draw.text(self.getAlignCenterPos(self.curTime[i], self.font, draw, self.borderWidth / 2, 0), self.curTime[i], font=self.font)
-        Timage.save(timeImages[i])
-        Timage.close()
+        self.saveImg(Timage, timeImages[i])
         self.render(timeImages[i], self.borderWidth, self.borderHeight, self.startPoints[i], 0)
     self.perTime = list(self.curTime)
 
