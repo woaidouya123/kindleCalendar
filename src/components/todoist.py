@@ -46,7 +46,7 @@ class TodoList(KindleWidget):
 
   def getTodoList(self):
     try:
-      tasks = self.api.get_tasks(filter="1 days")
+      tasks = self.api.get_tasks(filter="today")
       return tasks
     except Exception as error:
       print(error)
@@ -88,6 +88,3 @@ class TodoList(KindleWidget):
         self.saveImg(Himage, targetPath)
         self.render(targetPath, self.width, self.height, 0, 0)
         self.perTodo = list(self.curTodo)
-
-# todolist = TodoList(1024, 768, True, 512, 234, width=200, height=160, align="center", fontSize=12, border=False, authCode="ae9258d9e28828f5a12ae2071e69adbe7a6a8e12")
-# todolist.draw(datetime.datetime.now())
