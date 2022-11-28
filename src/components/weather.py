@@ -108,6 +108,6 @@ class Weather(KindleWidget):
         tempTypeIcon = Image.open(rootPath + "/assets/weatherIcon/" +WeatherIconDict.get(self.curWeather[4], 'noWeatherType.bmp'))
         tempTypeIcon = tempTypeIcon.resize((self.imgWidth, self.imgWidth))
         Himage.paste(tempTypeIcon,(int(self.width / 2 - self.imgWidth / 2), 0))
-        self.saveImg(Himage, targetPath)
+        self.saveBgImg(Himage, targetPath, self.left, self.top, self.s_rotate)
         self.render(targetPath, self.width, self.height, 0, 0)
       self.perWeather = list(self.curWeather)

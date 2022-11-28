@@ -26,7 +26,7 @@ def clearImg():
   Himage.close()
 
 def clearEips():
-  os.system("eips -c")
+  os.system("eips -g " + bgPath)
   print("eips -c")
 
 def clear():

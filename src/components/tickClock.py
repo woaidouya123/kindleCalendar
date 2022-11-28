@@ -45,7 +45,7 @@ class TickClock(KindleWidget):
       start = self.getRotatePos((self.width/2, self.tickLen), (self.width/2, self.width/2), angle)
       end = self.getRotatePos((self.width/2, 0), (self.width/2, self.width/2), angle)
       draw.line(start + end, fill=0, width=self.tickWidth)
-    self.saveBgImg(Himage, bgPath, self.left, self.top)
+    Himage.save(bgPath)
     Himage.close()
 
   def draw(self, timeNow):
@@ -63,7 +63,7 @@ class TickClock(KindleWidget):
     minuteStart = self.getRotatePos((self.width/2, self.tickLen * 2), (self.width/2, self.width/2), minuteAngle)
     minuteEnd = self.getRotatePos((self.width/2, self.width/2 + self.subTickLen), (self.width/2, self.width/2), minuteAngle)
     draw.line(minuteStart + minuteEnd, fill=0, width=self.subTickWidth)
-    self.saveImg(Himage, targetPath)
+    self.saveBgImg(Himage, targetPath, self.left, self.top, self.s_rotate)
     self.render(targetPath, self.width, self.width, 0, 0)
 
 # timeNow = datetime.datetime.now()

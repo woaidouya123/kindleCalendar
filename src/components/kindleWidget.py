@@ -49,10 +49,12 @@ class KindleWidget:
     Himage.save(targetPath)
     Himage.close()
 
-  def saveBgImg(self, Himage, path, x, y):
-    Bimage = ImageChops.invert(Image.open(bgPath).crop((x, y, x + Himage.width, y + Himage.height)))
+  def saveBgImg(self, Himage, path, x, y, rotate = False):
+    Bimage = Image.open(bgPath).crop((x, y, x + Himage.width, y + Himage.height))
     Himage = ImageChops.invert(Himage)
-    Himage = ImageChops.invert(ImageChops.add(Bimage, Himage, 1, 0))
+    Himage = ImageChops.add(Bimage, Himage, 1, 0)
+    if(rotate):
+      Himage = Himage.transpose(Image.ROTATE_270)
     Himage.save(path)
     Himage.close()
 
