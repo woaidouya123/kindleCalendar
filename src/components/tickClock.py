@@ -45,7 +45,7 @@ class TickClock(KindleWidget):
       start = self.getRotatePos((self.width/2, self.tickLen), (self.width/2, self.width/2), angle)
       end = self.getRotatePos((self.width/2, 0), (self.width/2, self.width/2), angle)
       draw.line(start + end, fill=0, width=self.tickWidth)
-    Himage.save(bgPath)
+    self.saveBgImg(Himage, bgPath, self.left, self.top)
     Himage.close()
 
   def draw(self, timeNow):

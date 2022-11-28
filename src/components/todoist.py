@@ -41,7 +41,7 @@ class TodoList(KindleWidget):
       self.left = self.left - self.width
     if(self.border == True):
       draw.rectangle([1, 1, self.width - 1, self.height - 1])
-    Himage.save(bgPath)
+    self.saveBgImg(Himage, bgPath, self.left, self.top)
     self.perTodo = [{'title': '-'}]
 
   def getTodoList(self):

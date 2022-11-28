@@ -2,7 +2,7 @@ import random
 import os
 import requests
 import json
-from PIL import Image
+from PIL import Image, ImageChops
 targetPath = os.path.abspath(os.path.dirname(__file__)) + '/assets/bg.png'
 
 URL = "https://www.duitang.com/napi/blog/list/by_filter_id/?filter_id=壁纸_电脑壁纸&start=0&limit=100"
@@ -28,10 +28,15 @@ def processImage(path):
     Himage = Himage.resize((1024, int(Himage.height * w_scale)))
   else:
     Himage = Himage.resize((int(Himage.width * h_scale), 768))
-  Himage = Himage.transpose(Image.ROTATE_270)
-  Himage = Himage.crop((0, 0, 768, 1024))
+  # Himage = Himage.transpose(Image.ROTATE_270)
+  Himage = Himage.crop((0, 0, 1024, 768))
   Himage.save(path)
 
 url = getImage()
 saveImage(url)
 processImage(targetPath)
+# kindlePath = os.path.abspath(os.path.dirname(__file__)) + '/assets/kindle.jpeg'
+# img1 = ImageChops.invert(Image.open(targetPath))
+# img2 = ImageChops.invert(Image.open(kindlePath))
+# out = ImageChops.invert(ImageChops.add(img2, img1, 1, 0))
+# out.show()

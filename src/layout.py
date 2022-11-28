@@ -7,6 +7,7 @@ from components import *
 from configparser import ConfigParser
 
 rootPath = os.path.abspath(os.path.dirname(__file__))
+bgPath = rootPath + "/assets/bg.png"
 targetPath = rootPath + "/assets/kindle.jpeg"
 cfg = ConfigParser()
 cfg.read(rootPath + "/config.ini",encoding="utf-8")
@@ -17,7 +18,8 @@ for k,v in config:
   configMap[k] = v
 
 def clearImg():
-  Himage = Image.new('1', (int(configMap["width"]), int(configMap["height"])), 255)
+  # Himage = Image.new('1', (int(configMap["width"]), int(configMap["height"])), 255)
+  Himage = Image.open(bgPath)
   if(configMap["rotate"] == '1'):
     Himage = Himage.transpose(Image.ROTATE_270)
   Himage.save(targetPath)

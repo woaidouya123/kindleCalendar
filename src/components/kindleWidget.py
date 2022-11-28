@@ -1,9 +1,10 @@
 import os
 import math
-from PIL import Image
+from PIL import Image, ImageChops
 
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 targetPath = rootPath + "/assets/kindle.jpeg"
+bgPath = rootPath + "/assets/bg.png"
 
 class KindleWidget:
   s_width = 0
@@ -46,6 +47,14 @@ class KindleWidget:
     Himage = Image.open(targetPath)
     Himage.paste(Image.open(img), (x, y))
     Himage.save(targetPath)
+    Himage.close()
+
+  def saveBgImg(self, Himage, path, x, y):
+    Bimage = ImageChops.invert(Image.open(bgPath).crop((x, y, x + Himage.width, y + Himage.height)))
+    Himage = ImageChops.invert(Himage)
+    Himage = ImageChops.invert(ImageChops.add(Bimage, Himage, 1, 0))
+    Himage.save(path)
+    Himage.close()
 
   def saveImg(self, Himage, path):
     if(self.s_rotate == True):
